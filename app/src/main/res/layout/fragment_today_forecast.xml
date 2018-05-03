@@ -13,6 +13,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:textAlignment="center"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/todayTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="?"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
         <LinearLayout
             android:id="@+id/topPaneLayout"
             android:layout_width="match_parent"
@@ -42,7 +60,7 @@
                     android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/cityTextView"
+                    android:id="@+id/currentStateTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="25dp"
@@ -58,18 +76,19 @@
         <ImageView
             android:id="@+id/animalImageView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
         <TextView
-            android:id="@+id/currentStateTextView"
+            android:id="@+id/cityTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp"
             android:text="?"
             android:textAlignment="center"
-            android:textSize="36sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,29 +97,30 @@
 
             <Space
                 android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3" />
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
                 android:layout_weight="1"
                 android:text="Pressure:" />
 
             <TextView
                 android:id="@+id/pressureTextView"
-                android:layout_width="35dp"
+                android:layout_width="15dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="?" />
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Wind:" />
+                android:text="Wind:"
+                android:textAlignment="viewStart" />
 
             <TextView
                 android:id="@+id/windTextView"
@@ -113,8 +133,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Space
@@ -131,14 +150,14 @@
 
             <TextView
                 android:id="@+id/humidityTextView"
-                android:layout_width="35dp"
+                android:layout_width="15dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="?" />
 
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Speed:" />
@@ -154,8 +173,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"

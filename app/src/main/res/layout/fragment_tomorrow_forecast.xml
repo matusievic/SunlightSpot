@@ -24,8 +24,8 @@
             android:id="@+id/tomorrowTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="15dp"
-            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:text="?"
             android:textAlignment="center"
             android:textSize="24sp" />
@@ -33,38 +33,63 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="30dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/stateImageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_weight="1"
+                android:layout_marginLeft="75dp"
                 android:contentDescription="TODO"
                 android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
-            <TextView
-                android:id="@+id/temperatureTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="25dp"
-                android:text="?"
-                android:textAlignment="center"
-                android:textSize="36sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/temperatureTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="10dp"
+                    android:text="?"
+                    android:textAlignment="viewStart"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/tomorrowStateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="5dp"
+                    android:text="?"
+                    android:textAlignment="viewStart"
+                    android:textSize="24sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/tomorrowAnimalImageView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="50dp">
+            android:orientation="horizontal">
 
             <Space
                 android:layout_width="1dp"
@@ -103,8 +128,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Space
@@ -147,7 +171,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:paddingTop="15dp">
+            android:paddingTop="20dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -20,18 +21,22 @@ import by.bsuir.kotiki.sunlightspot.R;
 import by.bsuir.kotiki.sunlightspot.entity.day.DayForecast;
 import by.bsuir.kotiki.sunlightspot.entity.day.detail.DetailedForecast;
 import by.bsuir.kotiki.sunlightspot.entity.day.hour.HourForecast;
+import by.bsuir.kotiki.sunlightspot.model.animal.AnimalStorage;
 import by.bsuir.kotiki.sunlightspot.model.icon.IconStorage;
 import by.bsuir.kotiki.sunlightspot.presenter.tomorrow.TomorrowPresenter;
 import by.bsuir.kotiki.sunlightspot.view.ForecastView;
 
 public class TomorrowForecastFragment extends Fragment implements ForecastView {
     private TomorrowPresenter presenter;
+    private final AnimalStorage animalStorage = AnimalStorage.getInstance();
     private final IconStorage iconStorage = IconStorage.getInstance();
     private boolean firstTimeFlag = true;
 
     private ImageView detailedStateImageView;
+    private ImageView detailedAnimalImageView;
     private TextView detailedTomorrowTextView;
     private TextView detailedTemperatureTextView;
+    private TextView detailedTomorrowStateTextView;
     private TextView detailedPressureTextView;
     private TextView detailedHumidityTextView;
     private TextView detailedWindDegreeTextView;
@@ -63,8 +68,10 @@ public class TomorrowForecastFragment extends Fragment implements ForecastView {
 
         // set up detailed forecast views
         detailedStateImageView = getView().findViewById(R.id.stateImageView);
+        detailedAnimalImageView = getView().findViewById(R.id.tomorrowAnimalImageView);
         detailedTomorrowTextView = getView().findViewById(R.id.tomorrowTextView);
         detailedTemperatureTextView = getView().findViewById(R.id.temperatureTextView);
+        detailedTomorrowStateTextView = getView().findViewById(R.id.tomorrowStateTextView);
         detailedPressureTextView = getView().findViewById(R.id.pressureTextView);
         detailedHumidityTextView = getView().findViewById(R.id.humidityTextView);
         detailedWindDegreeTextView = getView().findViewById(R.id.windDegreeTextView);
@@ -101,9 +108,13 @@ public class TomorrowForecastFragment extends Fragment implements ForecastView {
     public void setData(DayForecast forecast) {
         //set detailed forecast data
         DetailedForecast detailedForecast = forecast.getDetailedForecast();
+        Calendar calendar = new GregorianCalendar();
+        calendar.add(Calendar.DATE, 1);
         detailedStateImageView.setImageDrawable(iconStorage.getIcon(detailedForecast.getStateId(), getContext()));
-        detailedTomorrowTextView.setText(new SimpleDateFormat("dd MMMM", new Locale("en")).format(new GregorianCalendar().getTime()));
+        detailedAnimalImageView.setImageDrawable(animalStorage.getAnimal(detailedForecast.getStateId(), getContext()));
+        detailedTomorrowTextView.setText(new SimpleDateFormat("dd MMMM, EEE", new Locale("en")).format(calendar.getTime()));
         detailedTemperatureTextView.setText(String.format("%.1f °C", detailedForecast.getTemperature()));
+        detailedTomorrowStateTextView.setText(detailedForecast.getState());
         detailedPressureTextView.setText(String.format("%.1f '", detailedForecast.getPressure()));
         detailedHumidityTextView.setText(detailedForecast.getHumidity() + " %");
         detailedWindDegreeTextView.setText(detailedForecast.getWindDegree() + " °");
