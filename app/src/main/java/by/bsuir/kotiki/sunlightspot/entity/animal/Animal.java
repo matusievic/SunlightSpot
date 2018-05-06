@@ -1,5 +1,5 @@
 package by.bsuir.kotiki.sunlightspot.entity.animal;
 
 public enum Animal {
-    SHUNIA, QUIP
+    SHUNIA, QUIP, BIN
 }

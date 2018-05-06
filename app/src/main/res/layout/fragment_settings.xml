@@ -71,30 +71,44 @@
             android:textAlignment="center"
             android:textSize="24sp" />
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/quipImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:selectableItemBackground"
-                android:backgroundTintMode="screen"
-                android:hapticFeedbackEnabled="false"
-                android:src="@mipmap/quip_9_f" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/shuniaImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?android:selectableItemBackground"
-                android:hapticFeedbackEnabled="false"
-                android:src="@mipmap/shunia_9_f" />
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/shuniaImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:hapticFeedbackEnabled="false"
+                    android:src="@mipmap/shunia_9_f" />
+
+                <ImageButton
+                    android:id="@+id/quipImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:backgroundTintMode="screen"
+                    android:hapticFeedbackEnabled="false"
+                    android:src="@mipmap/quip_9_f" />
+
+                <ImageButton
+                    android:id="@+id/binImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:backgroundTintMode="screen"
+                    android:src="@mipmap/bin_9_f" />
+
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 

@@ -40,6 +40,7 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
 
     private ImageButton shuniaImageButton;
     private ImageButton quipImageButton;
+    private ImageButton binImageButton;
 
     public SettingsFragment() {}
 
@@ -69,6 +70,8 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         shuniaImageButton.setOnClickListener(shuniaListener);
         quipImageButton = getView().findViewById(R.id.quipImageButton);
         quipImageButton.setOnClickListener(quipListener);
+        binImageButton = getView().findViewById(R.id.binImageButton);
+        binImageButton.setOnClickListener(binListener);
     }
 
     @Override
@@ -93,8 +96,13 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         Animal activeAnimal = presenter.getAnimal();
         if (activeAnimal == Animal.SHUNIA) {
             quipImageButton.setAlpha(0.5F);
+            binImageButton.setAlpha(0.5F);
         } else if (activeAnimal == Animal.QUIP) {
             shuniaImageButton.setAlpha(0.5F);
+            binImageButton.setAlpha(0.5F);
+        } else if (activeAnimal == Animal.BIN) {
+            shuniaImageButton.setAlpha(0.5F);
+            quipImageButton.setAlpha(0.5F);
         }
     }
 
@@ -142,7 +150,7 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String location = resultLocationAdapter.getItem(i);
         locationSearchView.setQuery(location, true);
-        presenter.setLocation("q=" + location.substring(1, location.indexOf(',')) + "&");
+        presenter.setLocation("q=" + location.substring(0, location.indexOf(',')) + "&");
         resultLocationListView.setVisibility(View.INVISIBLE);
     }
 
@@ -153,6 +161,7 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
 
         shuniaImageButton.setAlpha(1F);
         quipImageButton.setAlpha(0.5F);
+        binImageButton.setAlpha(0.5F);
 
         presenter.setAnimal(Animal.SHUNIA);
         ForecastPagerAdapter.getInstance().getItem(1);
@@ -165,8 +174,22 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
 
         shuniaImageButton.setAlpha(0.5F);
         quipImageButton.setAlpha(1F);
+        binImageButton.setAlpha(0.5F);
 
         presenter.setAnimal(Animal.QUIP);
+        ForecastPagerAdapter.getInstance().getItem(1);
+    };
+
+    private ImageButton.OnClickListener binListener = view -> {
+        if (presenter.getAnimal().toString().toLowerCase().equals("bin")) {
+            return;
+        }
+
+        shuniaImageButton.setAlpha(0.5F);
+        quipImageButton.setAlpha(0.5F);
+        binImageButton.setAlpha(1F);
+
+        presenter.setAnimal(Animal.BIN);
         ForecastPagerAdapter.getInstance().getItem(1);
     };
 }
