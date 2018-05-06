@@ -59,8 +59,7 @@ public class TodayForecastFragment extends Fragment implements ForecastView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_today_forecast, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_today_forecast, container, false);
     }
 
     @Override

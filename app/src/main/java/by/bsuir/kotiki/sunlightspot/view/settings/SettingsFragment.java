@@ -84,7 +84,18 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         resultLocationAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, locations);
         resultLocationListView.setAdapter(resultLocationAdapter);
         resultLocationListView.setOnItemClickListener(this);
+
         autoLocationCheckBox.setChecked(presenter.getAutoLocation());
+        if (locationSearchView.getQuery().length() == 0) {
+            locationSearchView.setQuery(presenter.getLocation(), false);
+        }
+
+        Animal activeAnimal = presenter.getAnimal();
+        if (activeAnimal == Animal.SHUNIA) {
+            quipImageButton.setAlpha(0.5F);
+        } else if (activeAnimal == Animal.QUIP) {
+            shuniaImageButton.setAlpha(0.5F);
+        }
     }
 
     @Override
@@ -102,24 +113,7 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        if (s.isEmpty()) {
-            locations.clear();
-            return true;
-        }
-
-        List<String> result = null;
-        FutureTask<List<String>> locatorTask = new FutureTask<>(() -> presenter.getLocations(s));
-        new Thread(locatorTask).start();
-        try {
-            result = locatorTask.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        locations.clear();
-        locations.addAll(result);
-
-        return true;
+        return false;
     }
 
     @Override
@@ -148,7 +142,7 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String location = resultLocationAdapter.getItem(i);
         locationSearchView.setQuery(location, true);
-        presenter.setLocation("q=" + location.substring(0, location.indexOf(',')) + "&");
+        presenter.setLocation("q=" + location.substring(1, location.indexOf(',')) + "&");
         resultLocationListView.setVisibility(View.INVISIBLE);
     }
 
@@ -157,7 +151,11 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
             return;
         }
 
+        shuniaImageButton.setAlpha(1F);
+        quipImageButton.setAlpha(0.5F);
+
         presenter.setAnimal(Animal.SHUNIA);
+        ForecastPagerAdapter.getInstance().getItem(1);
     };
 
     private ImageButton.OnClickListener quipListener = view -> {
@@ -165,6 +163,10 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
             return;
         }
 
+        shuniaImageButton.setAlpha(0.5F);
+        quipImageButton.setAlpha(1F);
+
         presenter.setAnimal(Animal.QUIP);
+        ForecastPagerAdapter.getInstance().getItem(1);
     };
 }

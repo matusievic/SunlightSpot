@@ -54,4 +54,9 @@ public final class SettingsPresenter implements Presenter {
         settingsManager.setLocation(location);
         settingsManager.saveSettings();
     }
+
+    public String getLocation() {
+        String location = settingsManager.getLocation();
+        return location.substring(1, location.length() - 2);
+    }
 }
