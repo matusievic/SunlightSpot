@@ -17,7 +17,7 @@ public final class TodayPresenter implements ForecastPresenter {
 
     public TodayPresenter(Fragment fragment) {
         this.fragment = (TodayForecastFragment) fragment;
-        this.locationManager = LocationManager.getInstance(fragment.getActivity().getApplicationContext());
+        this.locationManager = LocationManager.getInstance();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

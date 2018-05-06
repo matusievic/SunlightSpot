@@ -3,9 +3,10 @@ package by.bsuir.kotiki.sunlightspot.model.animal;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import by.bsuir.kotiki.sunlightspot.model.settings.SettingsManager;
+
 public final class AnimalStorage {
     private static final AnimalStorage instance = new AnimalStorage();
-    private String activeAnimal = "shunia";
 
     private AnimalStorage() {
     }
@@ -15,6 +16,7 @@ public final class AnimalStorage {
     }
 
     public Drawable getAnimal(int code, Context context) {
+        String activeAnimal = SettingsManager.getInstance().getAnimal().toString().toLowerCase();
         StringBuilder builder = new StringBuilder(activeAnimal).append('_');
 
         if (code == 800) {
@@ -27,13 +29,5 @@ public final class AnimalStorage {
         String path = builder.toString();
 
         return context.getResources().getDrawable(context.getResources().getIdentifier(path, "mipmap", context.getPackageName()));
-    }
-
-    public String getActiveAnimal() {
-        return activeAnimal;
-    }
-
-    public void setActiveAnimal(String activeAnimal) {
-        this.activeAnimal = activeAnimal;
     }
 }

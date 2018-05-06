@@ -21,8 +21,11 @@ import java.util.List;
 import java.util.concurrent.FutureTask;
 
 import by.bsuir.kotiki.sunlightspot.R;
+import by.bsuir.kotiki.sunlightspot.entity.animal.Animal;
 import by.bsuir.kotiki.sunlightspot.model.animal.AnimalStorage;
+import by.bsuir.kotiki.sunlightspot.model.settings.SettingsManager;
 import by.bsuir.kotiki.sunlightspot.presenter.settings.SettingsPresenter;
+import by.bsuir.kotiki.sunlightspot.view.pager.ForecastPagerAdapter;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class SettingsFragment extends Fragment implements SearchView.OnQueryTextListener, CheckBox.OnCheckedChangeListener, ListView.OnItemClickListener {
@@ -34,13 +37,11 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
     private ListView resultLocationListView;
     private List<String> locations;
     private ArrayAdapter<String> resultLocationAdapter;
-    private String locationParam = "";
 
     private ImageButton shuniaImageButton;
     private ImageButton quipImageButton;
 
-    public SettingsFragment() {
-    }
+    public SettingsFragment() {}
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -83,6 +84,7 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         resultLocationAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, locations);
         resultLocationListView.setAdapter(resultLocationAdapter);
         resultLocationListView.setOnItemClickListener(this);
+        autoLocationCheckBox.setChecked(presenter.getAutoLocation());
     }
 
     @Override
@@ -95,8 +97,8 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
             locationSearchView.setVisibility(View.VISIBLE);
             resultLocationListView.setVisibility(View.VISIBLE);
         }
+        ForecastPagerAdapter.getInstance().getItem(1);
     }
-
 
     @Override
     public boolean onQueryTextSubmit(String s) {
@@ -142,33 +144,27 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         return true;
     }
 
-    public String getLocationParam() {
-        return locationParam;
-    }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String location = resultLocationAdapter.getItem(i);
         locationSearchView.setQuery(location, true);
-        locationParam = "q=" + location.substring(0, location.indexOf(',')) + "&";
+        presenter.setLocation("q=" + location.substring(0, location.indexOf(',')) + "&");
         resultLocationListView.setVisibility(View.INVISIBLE);
     }
 
-    private final AnimalStorage animalStorage = AnimalStorage.getInstance();
-
     private ImageButton.OnClickListener shuniaListener = view -> {
-        if (animalStorage.getActiveAnimal().equals("shunia")) {
+        if (presenter.getAnimal().toString().toLowerCase().equals("shunia")) {
             return;
         }
 
-        animalStorage.setActiveAnimal("shunia");
+        presenter.setAnimal(Animal.SHUNIA);
     };
 
     private ImageButton.OnClickListener quipListener = view -> {
-        if (animalStorage.getActiveAnimal().equals("quip")) {
+        if (presenter.getAnimal().toString().toLowerCase().equals("quip")) {
             return;
         }
 
-        animalStorage.setActiveAnimal("quip");
+        presenter.setAnimal(Animal.QUIP);
     };
 }
