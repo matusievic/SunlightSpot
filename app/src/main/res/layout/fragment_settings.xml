@@ -81,8 +81,9 @@
 
                 <ImageButton
                     android:id="@+id/shuniaImageButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="10dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
                     android:hapticFeedbackEnabled="false"
@@ -90,7 +91,7 @@
 
                 <ImageButton
                     android:id="@+id/quipImageButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackground"
@@ -102,6 +103,7 @@
                     android:id="@+id/binImageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:background="?android:selectableItemBackground"
                     android:backgroundTintMode="screen"
                     android:src="@mipmap/bin_9_f" />
