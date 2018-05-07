@@ -16,6 +16,7 @@ import by.bsuir.kotiki.sunlightspot.view.tomorrow.TomorrowForecastFragment;
 import by.bsuir.kotiki.sunlightspot.view.week.WeekForecastFragment;
 
 public class ForecastPagerAdapter extends FragmentPagerAdapter {
+    private static ForecastPagerAdapter instance;
     private final List<Fragment> fragments = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -25,6 +26,7 @@ public class ForecastPagerAdapter extends FragmentPagerAdapter {
         fragments.add(TodayForecastFragment.newInstance());
         fragments.add(TomorrowForecastFragment.newInstance());
         fragments.add(WeekForecastFragment.newInstance());
+        instance = this;
     }
 
     @Override
@@ -42,5 +44,9 @@ public class ForecastPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 4;
+    }
+
+    public static ForecastPagerAdapter getInstance() {
+        return instance;
     }
 }

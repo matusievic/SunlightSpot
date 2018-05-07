@@ -93,7 +93,7 @@ public class WeekForecastFragment extends Fragment implements ForecastView {
 
     public void setData(WeekForecast forecast) {
         // set dates
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", new Locale("en"));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM, EEE", new Locale("en"));
         Calendar calendar = new GregorianCalendar();
         for (int i = 0; i < 6; i++) {
             calendar.add(Calendar.DATE, 1);

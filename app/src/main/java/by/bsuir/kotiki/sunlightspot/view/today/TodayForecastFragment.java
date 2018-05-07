@@ -12,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 import by.bsuir.kotiki.sunlightspot.R;
 import by.bsuir.kotiki.sunlightspot.entity.day.DayForecast;
 import by.bsuir.kotiki.sunlightspot.entity.day.detail.DetailedForecast;
@@ -27,6 +31,7 @@ public class TodayForecastFragment extends Fragment implements ForecastView {
     private final AnimalStorage animalStorage = AnimalStorage.getInstance();
     private boolean firstTimeFlag = true;
 
+    private TextView todayTextView;
     private ImageView detailedAnimalImageView;
     private ImageView detailedStateImageView;
     private TextView detailedStateTextView;
@@ -54,8 +59,7 @@ public class TodayForecastFragment extends Fragment implements ForecastView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_today_forecast, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_today_forecast, container, false);
     }
 
     @Override
@@ -63,6 +67,7 @@ public class TodayForecastFragment extends Fragment implements ForecastView {
         super.onViewCreated(view, savedInstanceState);
 
         // set up detailed forecast views
+        todayTextView = getView().findViewById(R.id.todayTextView);
         detailedAnimalImageView = getView().findViewById(R.id.animalImageView);
         detailedStateImageView = getView().findViewById(R.id.currentStateImageView);
         detailedStateTextView = getView().findViewById(R.id.currentStateTextView);
@@ -106,6 +111,7 @@ public class TodayForecastFragment extends Fragment implements ForecastView {
         HourForecast hourForecast = forecast.getHourForecast();
 
         //set detailed forecast data
+        todayTextView.setText(new SimpleDateFormat("dd MMMM, EEE", new Locale("en")).format(new GregorianCalendar().getTime()));
         detailedAnimalImageView.setImageDrawable(animalStorage.getAnimal(detailedForecast.getStateId(), getContext()));
         detailedStateImageView.setImageDrawable(iconStorage.getIcon(detailedForecast.getStateId(), getContext()));
         detailedStateTextView.setText(detailedForecast.getState());

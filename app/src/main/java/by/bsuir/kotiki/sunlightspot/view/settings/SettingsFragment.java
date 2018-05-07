@@ -21,8 +21,11 @@ import java.util.List;
 import java.util.concurrent.FutureTask;
 
 import by.bsuir.kotiki.sunlightspot.R;
+import by.bsuir.kotiki.sunlightspot.entity.animal.Animal;
 import by.bsuir.kotiki.sunlightspot.model.animal.AnimalStorage;
+import by.bsuir.kotiki.sunlightspot.model.settings.SettingsManager;
 import by.bsuir.kotiki.sunlightspot.presenter.settings.SettingsPresenter;
+import by.bsuir.kotiki.sunlightspot.view.pager.ForecastPagerAdapter;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class SettingsFragment extends Fragment implements SearchView.OnQueryTextListener, CheckBox.OnCheckedChangeListener, ListView.OnItemClickListener {
@@ -34,13 +37,12 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
     private ListView resultLocationListView;
     private List<String> locations;
     private ArrayAdapter<String> resultLocationAdapter;
-    private String locationParam = "";
 
     private ImageButton shuniaImageButton;
     private ImageButton quipImageButton;
+    private ImageButton binImageButton;
 
-    public SettingsFragment() {
-    }
+    public SettingsFragment() {}
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -68,6 +70,8 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         shuniaImageButton.setOnClickListener(shuniaListener);
         quipImageButton = getView().findViewById(R.id.quipImageButton);
         quipImageButton.setOnClickListener(quipListener);
+        binImageButton = getView().findViewById(R.id.binImageButton);
+        binImageButton.setOnClickListener(binListener);
     }
 
     @Override
@@ -83,6 +87,23 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         resultLocationAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, locations);
         resultLocationListView.setAdapter(resultLocationAdapter);
         resultLocationListView.setOnItemClickListener(this);
+
+        autoLocationCheckBox.setChecked(presenter.getAutoLocation());
+        if (locationSearchView.getQuery().length() == 0) {
+            locationSearchView.setQuery(presenter.getLocation(), false);
+        }
+
+        Animal activeAnimal = presenter.getAnimal();
+        if (activeAnimal == Animal.SHUNIA) {
+            quipImageButton.setAlpha(0.5F);
+            binImageButton.setAlpha(0.5F);
+        } else if (activeAnimal == Animal.QUIP) {
+            shuniaImageButton.setAlpha(0.5F);
+            binImageButton.setAlpha(0.5F);
+        } else if (activeAnimal == Animal.BIN) {
+            shuniaImageButton.setAlpha(0.5F);
+            quipImageButton.setAlpha(0.5F);
+        }
     }
 
     @Override
@@ -95,29 +116,12 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
             locationSearchView.setVisibility(View.VISIBLE);
             resultLocationListView.setVisibility(View.VISIBLE);
         }
+        ForecastPagerAdapter.getInstance().getItem(1);
     }
-
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        if (s.isEmpty()) {
-            locations.clear();
-            return true;
-        }
-
-        List<String> result = null;
-        FutureTask<List<String>> locatorTask = new FutureTask<>(() -> presenter.getLocations(s));
-        new Thread(locatorTask).start();
-        try {
-            result = locatorTask.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        locations.clear();
-        locations.addAll(result);
-
-        return true;
+        return false;
     }
 
     @Override
@@ -142,33 +146,50 @@ public class SettingsFragment extends Fragment implements SearchView.OnQueryText
         return true;
     }
 
-    public String getLocationParam() {
-        return locationParam;
-    }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String location = resultLocationAdapter.getItem(i);
         locationSearchView.setQuery(location, true);
-        locationParam = "q=" + location.substring(0, location.indexOf(',')) + "&";
+        presenter.setLocation("q=" + location.substring(0, location.indexOf(',')) + "&");
         resultLocationListView.setVisibility(View.INVISIBLE);
     }
 
-    private final AnimalStorage animalStorage = AnimalStorage.getInstance();
-
     private ImageButton.OnClickListener shuniaListener = view -> {
-        if (animalStorage.getActiveAnimal().equals("shunia")) {
+        if (presenter.getAnimal().toString().toLowerCase().equals("shunia")) {
             return;
         }
 
-        animalStorage.setActiveAnimal("shunia");
+        shuniaImageButton.setAlpha(1F);
+        quipImageButton.setAlpha(0.5F);
+        binImageButton.setAlpha(0.5F);
+
+        presenter.setAnimal(Animal.SHUNIA);
+        ForecastPagerAdapter.getInstance().getItem(1);
     };
 
     private ImageButton.OnClickListener quipListener = view -> {
-        if (animalStorage.getActiveAnimal().equals("quip")) {
+        if (presenter.getAnimal().toString().toLowerCase().equals("quip")) {
             return;
         }
 
-        animalStorage.setActiveAnimal("quip");
+        shuniaImageButton.setAlpha(0.5F);
+        quipImageButton.setAlpha(1F);
+        binImageButton.setAlpha(0.5F);
+
+        presenter.setAnimal(Animal.QUIP);
+        ForecastPagerAdapter.getInstance().getItem(1);
+    };
+
+    private ImageButton.OnClickListener binListener = view -> {
+        if (presenter.getAnimal().toString().toLowerCase().equals("bin")) {
+            return;
+        }
+
+        shuniaImageButton.setAlpha(0.5F);
+        quipImageButton.setAlpha(0.5F);
+        binImageButton.setAlpha(1F);
+
+        presenter.setAnimal(Animal.BIN);
+        ForecastPagerAdapter.getInstance().getItem(1);
     };
 }
